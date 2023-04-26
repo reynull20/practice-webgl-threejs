@@ -123,6 +123,18 @@ scene.background = cubeTextureLoader.load([
     stars
 ])
 
+const box2Geometry = new THREE.BoxGeometry(4,4,4);
+const box2Material = new THREE.MeshBasicMaterial({
+    // map: textureLoader.load(nebula)
+});
+const box2MultiMaterial = [
+    new THREE.MeshBasicMaterial
+]
+const box2 = new THREE.Mesh(box2Geometry,box2Material);
+scene.add(box2);
+box2.position.set(10,10,5);
+box2.material.map = textureLoader.load(nebula)
+
 // Immediate GUI for debugging
 const gui = new dat.GUI();
 const options = {
@@ -154,6 +166,18 @@ gui.add(options, 'intensity',0, 1);
 
 // Animate box object
 let step = 0;
+
+const mousePosition = new THREE.Vector2();
+window.addEventListener('mousemove', (e) => {
+    mousePosition.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mousePosition.y = - (e.clientY / window.innerHeight) * 2 + 1;
+})
+
+const rayCaster = new THREE.Raycaster();
+
+const sphereId = sphere.id;
+box2.name = 'THe Box'
+
 function animate(time) {
     box.rotation.x = time / 1000;
     box.rotation.y = time / 1000;
@@ -165,6 +189,21 @@ function animate(time) {
     spotlight.penumbra = options.penumbra;
     spotlight.intensity = options.intensity;
     spotlightHelper.update();
+
+    rayCaster.setFromCamera(mousePosition, camera);
+    const intersects = rayCaster.intersectObjects(scene.children);
+    console.log(intersects);
+
+    for (let i = 0; i < intersects.length; i++) {
+        if (intersects[i].object.id === sphereId) {
+            intersects[i].object.material.color.set(0xFF0000);
+        }
+
+        if (intersects[i].object.name === 'THe Box') {
+            intersects[i].object.rotation.x = time / 1000;
+            intersects[i].object.rotation.y = time / 1000;
+        }
+    }
 
     renderer.render(scene, camera);
 }
