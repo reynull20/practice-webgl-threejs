@@ -144,6 +144,16 @@ const plane2 = new THREE.Mesh(plane2Geometry, plane2Material);
 scene.add(plane2)
 plane2.position.set(10,10,15)
 
+// 2nd Sphere (Custom Shader)
+const sphere2Geometry = new THREE.SphereGeometry(4);
+const sphere2Material = new THREE.ShaderMaterial({
+    vertexShader: document.getElementById('vertexShader').textContent,
+    fragmentShader: document.getElementById('fragmentShader').textContent
+})
+const sphere2 = new THREE.Mesh(sphere2Geometry, sphere2Material);
+scene.add(sphere2);
+sphere2.position.set(-5,10,10);
+
 // Immediate GUI for debugging
 const gui = new dat.GUI();
 const options = {
