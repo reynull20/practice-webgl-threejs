@@ -2,6 +2,9 @@ import * as THREE from "three";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import * as dat from 'dat.gui';
 
+import nebula from '../img/nebula.jpg'
+import stars from '../img/stars.jpg'
+
 const renderer = new THREE.WebGLRenderer();
 
 renderer.setSize(window.innerWidth,window.innerHeight);
@@ -103,7 +106,22 @@ scene.add(spotlightHelper);
 scene.fog = new THREE.FogExp2(0xFFFFFF, 0.01)
 
 // Change Renderer background (Unity Equeal : Skybox)
-renderer.setClearColor(0xFF00FF);
+// renderer.setClearColor(0xFF00FF);
+
+// Load Texture
+// 2D Texture
+const textureLoader = new THREE.TextureLoader();
+scene.background = textureLoader.load(stars);
+// Cube Texture
+const cubeTextureLoader = new THREE.CubeTextureLoader();
+scene.background = cubeTextureLoader.load([
+    stars,
+    stars,
+    stars,
+    stars,
+    stars,
+    stars
+])
 
 // Immediate GUI for debugging
 const gui = new dat.GUI();
