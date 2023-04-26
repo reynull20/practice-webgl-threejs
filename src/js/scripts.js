@@ -96,6 +96,15 @@ spotlight.angle = 0.3;
 const spotlightHelper = new THREE.SpotLightHelper(spotlight);
 scene.add(spotlightHelper);
 
+// add Fog
+// Alt 1
+// scene.fog = new THREE.Fog(0xFFFFFF,0,200);
+// ALt 2
+scene.fog = new THREE.FogExp2(0xFFFFFF, 0.01)
+
+// Change Renderer background (Unity Equeal : Skybox)
+renderer.setClearColor(0xFF00FF);
+
 // Immediate GUI for debugging
 const gui = new dat.GUI();
 const options = {
