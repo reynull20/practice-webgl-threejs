@@ -111,7 +111,7 @@ scene.fog = new THREE.FogExp2(0xFFFFFF, 0.01)
 // Load Texture
 // 2D Texture
 const textureLoader = new THREE.TextureLoader();
-scene.background = textureLoader.load(stars);
+// scene.background = textureLoader.load(stars);
 // Cube Texture
 const cubeTextureLoader = new THREE.CubeTextureLoader();
 scene.background = cubeTextureLoader.load([
