@@ -125,7 +125,7 @@ scene.background = cubeTextureLoader.load([
 
 const box2Geometry = new THREE.BoxGeometry(4,4,4);
 const box2Material = new THREE.MeshBasicMaterial({
-    // map: textureLoader.load(nebula)
+    map: textureLoader.load(nebula)
 });
 const box2MultiMaterial = [
     new THREE.MeshBasicMaterial
@@ -133,7 +133,16 @@ const box2MultiMaterial = [
 const box2 = new THREE.Mesh(box2Geometry,box2Material);
 scene.add(box2);
 box2.position.set(10,10,5);
-box2.material.map = textureLoader.load(nebula)
+// box2.material.map = textureLoader.load(nebula)
+
+const plane2Geometry = new THREE.PlaneGeometry(10,10,10,10);
+const plane2Material = new THREE.MeshBasicMaterial({
+    color: 0xFFFFFF,
+    wireframe: true
+})
+const plane2 = new THREE.Mesh(plane2Geometry, plane2Material);
+scene.add(plane2)
+plane2.position.set(10,10,15)
 
 // Immediate GUI for debugging
 const gui = new dat.GUI();
@@ -192,7 +201,6 @@ function animate(time) {
 
     rayCaster.setFromCamera(mousePosition, camera);
     const intersects = rayCaster.intersectObjects(scene.children);
-    console.log(intersects);
 
     for (let i = 0; i < intersects.length; i++) {
         if (intersects[i].object.id === sphereId) {
@@ -204,6 +212,13 @@ function animate(time) {
             intersects[i].object.rotation.y = time / 1000;
         }
     }
+
+    // plane2.geometry.attributes.position.array[0] = 10 * Math.random();
+    // plane2.geometry.attributes.position.array[1] = 10 * Math.random();
+    // plane2.geometry.attributes.position.array[2] = 10 * Math.random();
+    // const lastpointZ = plane2.geometry.attributes.position.array.length - 1;
+    // plane2.geometry.attributes.position.array[lastpointZ] = 10 * Math.random();
+    // plane2.geometry.attributes.position.needsUpdate = true;
 
     renderer.render(scene, camera);
 }
