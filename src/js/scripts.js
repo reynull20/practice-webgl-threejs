@@ -83,13 +83,12 @@ const mercuryMat = new THREE.MeshStandardMaterial({
     map: textureLoader.load(mercuryTex)
 })
 const mercury = new THREE.Mesh(mercuryGeo, mercuryMat);
+mercury.position.set(28,0,0);
 
+// Add mercury center of rotation
 const mercuryObject = new THREE.Object3D();
 mercuryObject.add(mercury)
 scene.add(mercuryObject)
-
-// Add mercury to parent sun
-mercury.position.set(28,0,0);
 
 function animate(time) {
     // Sun rotation
