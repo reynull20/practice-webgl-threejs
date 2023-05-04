@@ -39,17 +39,9 @@ const camera = new THREE.PerspectiveCamera(
 
 const orbit = new OrbitControls(camera, renderer.domElement);
 
-// Axis Helper. Will show on canvas
-const axesHelper = new THREE.AxesHelper(3);
-scene.add(axesHelper);
-
 // move the camera from its default position (0,0,0)
-camera.position.set(-10,10,10);
+camera.position.set(-100,250,250);
 orbit.update();
-
-// grid helper
-const gridHelper = new THREE.GridHelper(30);
-scene.add(gridHelper);
 
 // Add ambient light
 const ambientLight = new THREE.AmbientLight(
@@ -68,11 +60,43 @@ scene.background = skybox.load([
     starTex
 ])
 
+// Create Texture loader
 const textureLoader = new THREE.TextureLoader();
 
-const rayCaster = new THREE.Raycaster();
+// Add pointlight
+ const pointlight = new THREE.PointLight(0xFFFFFF,2,300)
+ const pointlightHelper = new THREE.PointLightHelper(pointlight,50,)
+scene.add(pointlight);
+scene.add(pointlightHelper);
+
+// Add sun
+const sunGeo = new THREE.SphereGeometry(16,20,20);
+const sunMat = new THREE.MeshBasicMaterial({
+    map: textureLoader.load(sunTex)
+})
+const sun = new THREE.Mesh(sunGeo, sunMat);
+scene.add(sun);
+
+// Add Mercury
+const mercuryGeo = new THREE.SphereGeometry(3.2, 10, 10);
+const mercuryMat = new THREE.MeshStandardMaterial({
+    map: textureLoader.load(mercuryTex)
+})
+const mercury = new THREE.Mesh(mercuryGeo, mercuryMat);
+
+const mercuryObject = new THREE.Object3D();
+mercuryObject.add(mercury)
+scene.add(mercuryObject)
+
+// Add mercury to parent sun
+mercury.position.set(28,0,0);
 
 function animate(time) {
+    // Sun rotation
+    sun.rotateY(0.0004);
+    mercury.rotateY(0.001);
+    mercuryObject.rotateY(0.01)
+
     renderer.render(scene, camera);
 }
 
