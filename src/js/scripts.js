@@ -65,9 +65,7 @@ const textureLoader = new THREE.TextureLoader();
 
 // Add pointlight
  const pointlight = new THREE.PointLight(0xFFFFFF,2,300)
- const pointlightHelper = new THREE.PointLightHelper(pointlight,50,)
 scene.add(pointlight);
-scene.add(pointlightHelper);
 
 // Add sun
 const sunGeo = new THREE.SphereGeometry(16,20,20);
@@ -75,7 +73,6 @@ const sunMat = new THREE.MeshBasicMaterial({
     map: textureLoader.load(sunTex)
 })
 const sun = new THREE.Mesh(sunGeo, sunMat);
-scene.add(sun);
 
 // Add Mercury
 const mercuryGeo = new THREE.SphereGeometry(3.2, 10, 10);
@@ -88,13 +85,69 @@ mercury.position.set(28,0,0);
 // Add mercury center of rotation
 const mercuryObject = new THREE.Object3D();
 mercuryObject.add(mercury)
-scene.add(mercuryObject)
+
+// Add Venus
+const venusGeo = new THREE.SphereGeometry(2.5,10,10)
+const venusMat = new THREE.MeshStandardMaterial({
+    map: textureLoader.load(venusTex)
+})
+const venus = new THREE.Mesh(venusGeo,venusMat);
+const venusObj = new THREE.Object3D().add(venus)
+venus.position.set(-50,0,0)
+
+// Add Saturn
+const saturnGeo = new THREE.SphereGeometry(10,30,30)
+const saturnMat = new THREE.MeshStandardMaterial({
+    map: textureLoader.load(saturnTex)
+})
+const saturn = new THREE.Mesh(saturnGeo,saturnMat);
+const saturnObj = new THREE.Object3D().add(saturn)
+saturn.position.set(130,0,0)
+
+// Add Saturn Ring
+const saturnRingGeo = new THREE.RingGeometry(10,20,30)
+const saturnRingMat = new THREE.MeshBasicMaterial({
+    map: textureLoader.load(saturnRingTex),
+    side: THREE.DoubleSide
+})
+const saturnRing = new THREE.Mesh(saturnRingGeo,saturnRingMat);
+const saturnRingObj = new THREE.Object3D().add(saturnRing)
+saturnRing.position.set(130,0,0)
+saturnRing.rotateX(0.5 * Math.PI)
+saturnObj.add(saturnRing)
+
+// Add object to scene
+scene.add(sun);
+
+function createPlanets(size, texture, position) {
+    const planetGeo = new THREE.SphereGeometry(size,20,20)
+    const planetMat = new THREE.MeshBasicMaterial({
+        map: textureLoader.load(texture)
+    })
+    const planet = new THREE.Mesh(planetGeo,planetMat)
+    scene.add(new THREE.Object3D().add(planet))
+    planet.position.x = position;
+
+    return {mesh, obj}
+}
+scene.add(mercuryObject);
+scene.add(venusObj);
+scene.add(saturnObj);
 
 function animate(time) {
     // Sun rotation
     sun.rotateY(0.0004);
     mercury.rotateY(0.001);
-    mercuryObject.rotateY(0.01)
+    mercuryObject.rotateY(0.01);
+    venus.applyQuaternion(
+        new THREE.Quaternion().setFromAxisAngle(
+            new THREE.Vector3(0,1,0),
+            0.0007 * Math.PI / 2
+        )
+    )
+    venusObj.rotateY(0.005)
+    saturn.rotateY(0.0038)
+    saturnObj.rotateY(0.001)
 
     renderer.render(scene, camera);
 }
