@@ -119,6 +119,7 @@ saturnObj.add(saturnRing)
 // Add object to scene
 scene.add(sun);
 
+
 function createPlanets(size, texture, position) {
     const planetGeo = new THREE.SphereGeometry(size,20,20)
     const planetMat = new THREE.MeshBasicMaterial({
@@ -130,9 +131,8 @@ function createPlanets(size, texture, position) {
 
     return {mesh, obj}
 }
-scene.add(mercuryObject);
-scene.add(venusObj);
-scene.add(saturnObj);
+
+// Add object
 
 function animate(time) {
     // Sun rotation
