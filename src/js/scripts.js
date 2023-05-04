@@ -51,11 +51,24 @@ orbit.update();
 const gridHelper = new THREE.GridHelper(30);
 scene.add(gridHelper);
 
-const mousePosition = new THREE.Vector2();
-window.addEventListener('mousemove', (e) => {
-    mousePosition.x = (e.clientX / window.innerWidth) * 2 - 1;
-    mousePosition.y = - (e.clientY / window.innerHeight) * 2 + 1;
-})
+// Add ambient light
+const ambientLight = new THREE.AmbientLight(
+    color = 0x333333
+)
+scene.add(ambientLight);
+
+// Add background texture
+const skybox = new THREE.CubeTextureLoader();
+scene.background = skybox.load([
+    starTex,
+    starTex,
+    starTex,
+    starTex,
+    starTex,
+    starTex
+])
+
+const textureLoader = new THREE.TextureLoader();
 
 const rayCaster = new THREE.Raycaster();
 
@@ -69,4 +82,10 @@ window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth,window.innerHeight);
+});
+
+const mousePosition = new THREE.Vector2();
+window.addEventListener('mousemove', (e) => {
+    mousePosition.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mousePosition.y = - (e.clientY / window.innerHeight) * 2 + 1;
 })
