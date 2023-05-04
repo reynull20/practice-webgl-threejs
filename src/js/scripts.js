@@ -3,8 +3,20 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import * as dat from 'dat.gui';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
 
-import nebula from '../img/nebula.jpg'
-import stars from '../img/stars.jpg'
+// Import all texture
+import starTex from '../img/stars.jpg'
+import earthTex from '../img/earth.jpg'
+import jupiterTex from '../img/jupiter.jpg'
+import marsTex from '../img/marsTex'
+import mercuryTex from '../img/mercury.jpg'
+import neptuneTex from '../img/neptune.jpg'
+import plutoTex from '../img/pluto.jpg'
+import saturnTex from '../img/saturn.jpg'
+import saturnRingTex from '../img/saturn ring.png'
+import sunTex from '../img/sun.jpg'
+import uranusTex from '../img/uranus.jpg'
+import uranusRingTex from '../img/uranus ring.png'
+import venusTex from '../img/venus.jpg'
 
 // Load GLB object (3d object made from software like Blender)
 const monkeyUrl = new URL('../assets/monkey.glb', import.meta.url);
